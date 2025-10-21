@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gueess My Number</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Guess My Number!</h1>
+    <p>Think of a number between <strong>1</strong> and <strong>100</strong>.</p>
+
+    <div id="game">
+      <p id="guess-text">Is your number <span id="current-guess"></span>?</p>
+
+      <div class="buttons">
+        <button id="lower">Lower</button>
+        <button id="higher">Higher</button>
+        <button id="correct">Correct</button>
+      </div>
+
+      <p id="feedback"></p>
+
+      <div id="history-container">
+        <h3>Guess History</h3>
+        <ul id="history-list"></ul>
+    </div>
+    
+    </div>
+
+    <button id="restart" class="hidden">Restart</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
