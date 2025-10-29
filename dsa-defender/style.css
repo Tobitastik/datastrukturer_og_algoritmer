@@ -5,8 +5,8 @@ body {
 }
 
 #gamefield {
-  width: 800px;
-  height: 600px;
+  width: 100vh;
+  height: 100vh;
   border: 1px solid yellow;
   position: relative;
   overflow: hidden;

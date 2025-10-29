@@ -2,12 +2,8 @@ import StaticArray from "./StaticArray.js";
 
 window.addEventListener("load", start);
 
-// Hardcoded sizes - should probably be dynamic with regards to the CSS ...
-const gamesizes = {
-  width: 800,
-  height: 600,
-  enemy: 64,
-};
+let gamesizes;
+let gamefield;
 
 let gameRunning = true;
 let health = 100;
@@ -15,6 +11,21 @@ let score = 0;
 
 function start() {
   console.log("Game is running");
+
+
+gamefield = document.querySelector("#gamefield");
+gamesizes = {
+  width: gamefield.clientWidth,
+  height: gamefield.clientHeight,
+  enemy: 64,
+};
+
+window.addEventListener("resize", () => {
+  gamesizes.width = gamefield.clientWidth;
+  gamesizes.height = gamefield.clientHeight;
+  console.log("Resized:", gamesizes)
+});
+
   // build list of enemies
   createInitialEnemies();
   // ready to start
