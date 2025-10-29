@@ -1,12 +1,12 @@
 let data = [];
-for(let i=1; i <= 100; i++) {
+for(let i=1; i <= 50000; i++) {
   data[i-1] = i;
 }
 
 function binarySearch(searchFor, data) {
   let found = false;
   let min = 0;
-  let max = data.length;
+  let max = data.length-1;
   let iterations = 0;
 
   while (min <= max) {
@@ -28,25 +28,24 @@ function binarySearch(searchFor, data) {
   return {found, iterations};
 }
 
-const result = binarySearch(2, data);
-console.log(result.found, 'iterations:', result.iterations);
+let worstCase = 0;
+for (let i = 0; i < data.length; i++) {
+  const result = binarySearch(data[i], data);
+  if (result.iterations > worstCase) {
+    worstCase = result.iterations;
+  }
+}
 
+console.log(`Worst case iterations for n = ${data.length}: ${worstCase}`);
 
 
 /*
-50 = 1
-25 = 2
-75 = 7
-12 = 3
-18 = 4
-15 = 5
-3 = 5
-1 = 6
-2 = 7
+200 = 8
+500 = 9
+1.000 = 10
+2.000 = 11
+5.000 = 13
+10.000 = 14
+50.000 = 16
 
-For 50, 25, 12 passer det med at det er halvdelen så de skal have en ekstra iteration hver.
-75 kommer til at være så mange iterationer da den tæller fra 51 til 100 
 */
-
-
-
