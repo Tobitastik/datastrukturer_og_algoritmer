@@ -9,6 +9,7 @@ class SinglyLinkedList {
     constructor(){
         this.head = null;
         this.tail = null;
+        this.size = 0;
     }
 
     printList(){
@@ -24,15 +25,13 @@ class SinglyLinkedList {
 
         if(!this.head){
             this.head = newNode;
-            return;
+            this.tail = newNode;
+        } else{
+            this.tail.next = newNode;
+            this.tail = newNode;
         }
-
-        let current = this.head;
-        while(current.next){
-            current = current.next;
-        }
-
-        current.next = newNode;
+        
+        this.size++;
     }
 
     get(index){
@@ -56,21 +55,17 @@ class SinglyLinkedList {
 
     getFirst(){
         if(!this.head){
-            throw new RangeError("Emepty list");
+            throw new RangeError("Empty list");
         }
         return this.head.data;
     }
 
     getLast(){
-        if(!this.head){
-            throw new RangeError('Emepty list');
+        if(!this.tail){
+            throw new RangeError('Empty list');
         }
 
-        let current = this.head;
-        while(current.next){
-            current = current.next;
-        }
-        return current.data;
+        return this.tail.data;
     }
 
     set(index, data){
@@ -99,55 +94,165 @@ class SinglyLinkedList {
         const newNode = new Node(data);
     }
 
-    remove(index){
-
-    }
-
-    removeFirst(){
-
+    removeFirst(){ 
+        if(!this.head) return;
+        this.head = this.head.next;
+        this.size--;
+        if(this.size === 0) this.tail = null;
     }
 
     removeLast(){
+        if(!this.head) return;
 
+        if(this.head === this.tail){
+            this.head = null;
+            this.tail = null;
+        } else{
+            let current = this.head;
+            while(current.next !== this.tail){
+                current = current.next;
+            }
+            current.next = null;
+            this.tail = current;
+        }
+
+        this.size--;
+    }
+
+    remove(index){
+        if(index < 0 || index >= this.size){
+            throw new RangeError("Index out of bounds");
+        }
+
+        if(index === 0){
+            this.removeFirst();
+            return;
+        }
+
+        if(index === this.size-1){
+            this.removeLast();
+            return
+        }
+
+        let prev = this.head;
+        for(let i = 0; i < index-1; i++){
+            prev = prev.next;
+        }
+
+        prev.next = prev.next.next;
+        this.size--;    
     }
 
     size(){
-
+        return this.size;
     }
 
     clear(){
-
+        this.head = null;
+        this.tail = null;
+        this.size = 0;      
     }
 
     getNode(index){
+        if(index < 0 || index >= this.size){
+            throw new RangeError("Index out of bounds");
+        }
 
+        let current = this.head;
+        for(let i = 0; i < index; i++){
+            current = current.next;
+        }
+        return current;
     }
 
     getFirstNode(){
-
+        return this.head;
     }
 
     getLastNode(){
-
+        return this.tail;
     }
 
     getNextNode(node){
-
+        if(!node){
+            throw new Error("Not a node");
+        }
+        return node.next;
     }
 
     getPrevNode(node){
+        if(!node){
+            throw new Error("Not a node");
+        }
+        
+        if(node === this.head){
+            return null;
+        }
 
+        let current = this.head;
+        while (current && current.next !== node){
+            current = current.next;
+        }
+
+        return current || null;
     }
 
     insertBefore(node, data){
+        const newNode = new Node(data);
 
+        if(node === this.head){
+            newNode.next = this.head;
+            this.head = newNode;
+            this.size++;
+            return;
+        }
+
+        const prev = this.getPrevNode(node);
+        
+        if(!prev){
+            throw new RangeError("Index out of bounds");
+        }
+        prev.next = newNode;
+        newNode.next = node;
+        this.size++;
     }
 
     insertAfter(node, data){
+        const newNode = new Node(data);
 
+        newNode.next = node.next;
+        node.next = newNode;
+
+        if(node === this.tail){
+            this.tail = newNode;
+        }
+
+        this.size++;
     }
 
     removeNode(node){
+        if(!this.head) return;
 
+        if(this.head === node){
+            this.head = this.head.next;
+            if(node === this.tail){
+                this.tail = null;
+            }
+            this.size--;
+            return;
+        }
+
+        let current = this.head;
+        while(current.next && current.next !== node){
+            current = current.next;
+        }
+
+        current.next = node.next;
+
+        if(node === this.tail){
+            this.tail = current;
+        }
+
+        this.size--;
     }
 }
