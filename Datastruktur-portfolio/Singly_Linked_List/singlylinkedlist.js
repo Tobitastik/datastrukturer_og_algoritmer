@@ -14,10 +14,13 @@ class SinglyLinkedList {
 
     printList(){
         let current = this.head;
+        const result = [];
         while(current){
             console.log(current.data);
+            result.push(current.data);
             current = current.next;
         }
+        return result;
     }
 
     add(data){
@@ -92,6 +95,18 @@ class SinglyLinkedList {
             throw new RangeError("Index out of bounds");
         }
         const newNode = new Node(data);
+
+        if(index === 0){
+            newNode.next = this.head;
+            this.head = newNode;
+            if(!this.tail) this.tail = newNode;
+        } else{
+            const prev = this.getNode(index - 1);
+            newNode.next = prev.next;
+            prev.next = newNode;
+            if(newNode.next === null) this.tail = newNode;
+        }
+        this.size++;
     }
 
     removeFirst(){ 
@@ -141,10 +156,6 @@ class SinglyLinkedList {
 
         prev.next = prev.next.next;
         this.size--;    
-    }
-
-    size(){
-        return this.size;
     }
 
     clear(){
@@ -230,29 +241,28 @@ class SinglyLinkedList {
         this.size++;
     }
 
-    removeNode(node){
-        if(!this.head) return;
+    removeNode(node) {
+    if (!this.head || !node) return;
 
-        if(this.head === node){
-            this.head = this.head.next;
-            if(node === this.tail){
-                this.tail = null;
-            }
-            this.size--;
-            return;
-        }
-
-        let current = this.head;
-        while(current.next && current.next !== node){
-            current = current.next;
-        }
-
-        current.next = node.next;
-
-        if(node === this.tail){
-            this.tail = current;
-        }
-
+    if (this.head === node) {
+        this.head = this.head.next;
+        if (node === this.tail) this.tail = null;
         this.size--;
+        return;
     }
+
+    let current = this.head;
+    while (current.next && current.next !== node) {
+        current = current.next;
+    }
+
+    if (!current.next) {
+        throw new Error("Node not found");
+    }
+
+    current.next = node.next;
+    if (node === this.tail) this.tail = current;
+    this.size--;
+}
+
 }
