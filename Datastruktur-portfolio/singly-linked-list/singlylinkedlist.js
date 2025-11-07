@@ -67,7 +67,6 @@ class SinglyLinkedList {
         if(!this.tail){
             throw new RangeError('Empty list');
         }
-
         return this.tail.data;
     }
 
