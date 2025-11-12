@@ -1,8 +1,9 @@
-class Grid{
-    constructor(rows, cols){
+export class Grid{
+    constructor(rows, cols, wrap = true){
         this.rows = rows;
         this.cols = cols;
         this.grid = Array(rows * cols).fill(null);
+        this.wrap = wrap;
     }
 
     set({row, col}, value){
@@ -42,34 +43,40 @@ class Grid{
         return {row, col};
     }
 
-    neighbours({row, col}){
-        const results = [];
+    neighbours({row, col}) {
+    const results = [];
 
-        for(let dRow = -1; dRow <= 1; dRow++){
-            for(let dCol = -1; dCol <= 1; dCol++){
-                if(dRow === 0 && dCol === 0) continue;
+    for (let dRow = -1; dRow <= 1; dRow++) {
+        for (let dCol = -1; dCol <= 1; dCol++) {
+            if (dRow === 0 && dCol === 0) continue;
 
-                let newRow = row + dRow;
-                let newCol = col + dCol;
+            let newRow = row + dRow;
+            let newCol = col + dCol;
 
-                if(newRow < 0) newRow = this.rows -1;
-                if(newRow >= this.rows) newRow = 0;
-
-                if(newCol < 0) newCol = this.cols -1;
-                if(newCol >= this.cols) newCol = 0;
-
-                results.push({row: newRow, col: newCol});
+            if (this.wrap) {
+                if (newRow < 0) newRow = this.rows - 1;
+                if (newRow >= this.rows) newRow = 0;
+                if (newCol < 0) newCol = this.cols - 1;
+                if (newCol >= this.cols) newCol = 0;
+                results.push({ row: newRow, col: newCol });
+            } else {
+                if (newRow >= 0 && newRow < this.rows && newCol >= 0 && newCol < this.cols) {
+                    results.push({ row: newRow, col: newCol });
+                }
             }
         }
-        return results;
     }
+
+    return results;
+}
+
 
     neighbourValues({row, col}){
         const results = [];
 
-        const neighborPositions = this.neighbors({ row, col });
+        const neighbourPositions = this.neighbours({ row, col });
 
-        for (const pos of neighborPositions) {
+        for (const pos of neighbourPositions) {
             const value = this.get(pos); 
             results.push({ row: pos.row, col: pos.col, value });
         }

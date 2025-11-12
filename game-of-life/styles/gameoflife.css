@@ -1,0 +1,50 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+h1 {
+    margin-top: 20px;
+}
+
+#grid-container {
+    display: grid;
+    gap: 1px;
+    background-color: #444;
+    margin-top: 20px;
+
+    width: fit-content;
+    height: fit-content;
+
+    border: 2px solid black;
+    padding: 2px; 
+}
+
+.cell {
+    width: 25px;
+    height: 25px;
+    background-color: #eee;
+}
+
+.cell.alive {
+    background-color: black;
+}
+.cell.dead {
+    background-color: #eee;
+}
+
+#buttons {
+    margin-top: 10px;
+}
+
+#buttons button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    font-size: 16px;
+}
