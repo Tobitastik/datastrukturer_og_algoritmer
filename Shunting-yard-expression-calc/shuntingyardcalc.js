@@ -1,3 +1,27 @@
+//helper function for multiple digit numbers
+function tokenize(input){
+    const tokens = [];
+    let numberBuffer = "";
+
+    for(let char of input){
+        if(char === " ") continue;
+        if(!isNaN(char)){
+            numberBuffer += char;
+        }
+     else {
+        if(numberBuffer.length > 0){
+            tokens.push(numberBuffer);
+            numberBuffer = "";
+        }
+        tokens.push(char);
+     }
+    }
+    if(numberBuffer.length > 0){
+        tokens.push(numberBuffer);
+    }
+    return tokens;
+}
+
 function shuntingYardCalc(){
     const operators = {
         '*': {
@@ -86,13 +110,12 @@ function shuntingYardCalc(){
         }
     };
 
-    for(let i of input){
-        if(i === ' ') continue;
-        handleToken(i);
+    const tokens = tokenize(input);
+    for(const token of tokens){
+        handleToken(token);
     }
 
-    while(stack.length !== 0){
-        assert(peek() !== '(');
+    while(stack.length > 0){
         addToOutput(stack.pop());
     }
     return output;
@@ -103,4 +126,4 @@ function shuntingYardCalc(){
 
 const calc = shuntingYardCalc();
 
-console.log(calc.toRPN("123+2")); 
+console.log(calc.toRPN("123+243*6")); 
