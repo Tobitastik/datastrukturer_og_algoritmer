@@ -17,4 +17,18 @@ function shuntingYardCalc(){
             assoc: 'left',
         },
     };
+
+    const toRPN = (input) => {
+        const stack = [];
+        let output = '';
+
+        for(let i of input){
+            if(i === '') continue;
+            
+            handleToken(i);
+        }
+        
+        return output;
+    }
+
 }
