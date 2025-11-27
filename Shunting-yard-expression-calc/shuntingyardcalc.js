@@ -27,8 +27,17 @@ function shuntingYardCalc(){
             
             handleToken(i);
         }
-        
+
         return output;
+    }
+
+    //If the token is a number, it'll be added to the output
+    const handleToken = (token) => {
+        switch(true){
+            case !isNaN(parseFloat(token)):
+                output += ' ' + token;
+                break;
+        }
     }
 
 }
