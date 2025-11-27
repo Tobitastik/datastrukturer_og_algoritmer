@@ -126,4 +126,4 @@ function shuntingYardCalc(){
 
 const calc = shuntingYardCalc();
 
-console.log(calc.toRPN("123+243*6")); 
+console.log(calc.toRPN("123+243*6*2-4*(4+5)")); 
