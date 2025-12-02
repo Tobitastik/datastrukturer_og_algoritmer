@@ -234,7 +234,7 @@ class DoublyLinkedList {
             this.head = null;
             this.tail = null;
         } else {
-            this.head = this.head.mext;
+            this.head = this.head.next;
             this.head.prev = null;
         }
 
